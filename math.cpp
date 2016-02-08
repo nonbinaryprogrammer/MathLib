@@ -4,18 +4,28 @@
 
 using namespace std;
 
-int pow(int n, int m) {
-  int i, s;
+/***************************************************************************
+ * regular power function
+ **************************************************************************/
+int pow(int base, int power) {
+  int iterator, solution;
 
-  s = 1;
+  solution = 1;
 
-  for(i=0; i<m; i++) {
-    s *= n;
+  //multiply the base by iteself <power> number of times
+  for(iterator=0; iterator<power; iterator++) {
+    solution *= base;
   }
 
-  return s;
+  return solution;
 }
 
+/***************************************************************************
+ * BigInt Class
+ * This is a class for storing positive integers of up to 100000 digits in
+ * length. BigInts are stored as an array of integers, in Little Endian. They
+ * have the additional property of digit count.
+ **************************************************************************/
 class BigInt {
   private:
     int array[100000];
@@ -28,14 +38,18 @@ class BigInt {
   void print(void) {
     int i;
 
+    //prints each digit in the array starting with the most significant bit,
+    //which is stored in the highest index, at digits-1
     for(i=digits-1; i>=0; i--) {
       printf("%d", array[i]);
     }
-    printf("\n");
 
+    //if the BigInt == 0, then nothing would get printed by the above loop since
+    //the digit count is set to 0, so this prints a 0 if the digit count is 0.
     if(digits == 0) {
-      printf("0\n");
+      printf("0");
     }
+    printf("\n");   //add a newline character
 
     return;
   }
@@ -49,7 +63,9 @@ class BigInt {
   void operator=(int n) {
     int i;
 
+    //init the digit count to zero
     digits = 0;
+    //when all of the number, n, has been stored, it will be equal to 0
     while(n != 0) {
       array[digits] = n%10;
       n = n/10;
