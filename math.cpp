@@ -602,8 +602,153 @@ class BigInt {
   /***************************************************************************
    * begin >
    **************************************************************************/
+  inline bool operator> (const int m) const {
+    int i;
+    BigInt n;
+
+    n = m;
+
+    i = digits - 1;
+
+    if(digits > n.digits) {
+      return 1;
+    } else if(digits < n.digits) {
+      return 0;
+    } else {
+      while(array[i] == n.array[i] && i > 0) {
+        i--;
+      }
+
+      if(array[i] > n.array[i]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+
+  inline bool operator> (const long m) const {
+    int i;
+    BigInt n;
+
+    n = m;
+
+    i = digits - 1;
+
+    if(digits > n.digits) {
+      return 1;
+    } else if(digits < n.digits) {
+      return 0;
+    } else {
+      while(array[i] == n.array[i] && i > 0) {
+        i--;
+      }
+
+      if(array[i] > n.array[i]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+
+  inline bool operator> (const string m) const {
+    int i;
+    BigInt n;
+
+    n = m;
+
+    i = digits - 1;
+
+    if(digits > n.digits) {
+      return 1;
+    } else if(digits < n.digits) {
+      return 0;
+    } else {
+      while(array[i] == n.array[i] && i > 0) {
+        i--;
+      }
+
+      if(array[i] > n.array[i]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+
+  inline bool operator> (const BigInt &n) const {
+    int i;
+
+    i = digits - 1;
+
+    if(digits > n.digits) {
+      return 1;
+    } else if(digits < n.digits) {
+      return 0;
+    } else {
+      while(array[i] == n.array[i] && i > 0) {
+        i--;
+      }
+
+      if(array[i] > n.array[i]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+
   /***************************************************************************
    * end >
+   **************************************************************************/
+
+  /***************************************************************************
+   * begin <
+   **************************************************************************/
+  inline bool operator< (const int n) const {
+    BigInt i;
+    bool sol;
+
+    i = n;
+
+    sol = i > (*this);
+
+    return sol;
+  }
+
+  inline bool operator< (const long n) const {
+    BigInt i;
+    bool sol;
+
+    i = n;
+
+    sol = i > (*this);
+
+    return sol;
+  }
+
+  inline bool operator< (const string n) const {
+    BigInt i;
+    bool sol;
+
+    i = n;
+
+    sol = i > (*this);
+
+    return sol;
+  }
+
+  inline bool operator< (const BigInt &n) const {
+    bool sol;
+
+    sol = n > (*this);
+
+    return sol;
+  }
+
+  /***************************************************************************
+   * end <
    **************************************************************************/
 
   /***************************************************************************
@@ -752,11 +897,220 @@ int main() {
   b.print();
   printf("\n");
 
+  printf("testing ==:\n");
+  b = 3;
+  c = 3;
+  if(b == c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 4;
+  if(b == c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+  printf("\n");
+
+  printf("testing !=:\n");
+  b = 4;
+  c = 3;
+  if(b != c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b != c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+  printf("\n");
+
+  printf("testing >:\n");
+  b = 4;
+  c = 3;
+  if(b > c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b > c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b > c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b > 3) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b > 3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b > 3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b > (long)3) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b > (long)3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b > (long)3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b > "3") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b > "3") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b > "3") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+  printf("\n");
+
   printf("testing sumdigits()\n");
   c = 123456789;
   b = c.sumdigits();
   printf("expected: %d, actual: ", 45);
   b.print();
+  printf("\n");
+
+  printf("testing <:\n");
+  c = 4;
+  b = 3;
+  if(b < c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  c = 3;
+  if(b < c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  c = 2;
+  if(b < c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b < 5) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b < 3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b < 1) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b < (long)5) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b < (long)3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b < (long)1) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 4;
+  if(b < "5") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  b = 3;
+  if(b < "3") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  b = 2;
+  if(b < "1") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
   printf("\n");
 
   printf("testing proddigits()\n");
