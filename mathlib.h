@@ -67,11 +67,15 @@ class BigInt {
     digits = 0;
     //when all of the number, n, has been stored, it will be equal to 0
     while(n != 0) {
+      //get the lsb from the number by modding by 10 and stick it in the msb
       array[digits] = n%10;
+      //save that removal of lsb
       n = n/10;
+      //add to the digit count
       digits++;
     }
 
+    //fill the rest of the array with 0's
     for(i=digits; i<100000; i++) {
       array[i] = 0;
     }
@@ -79,6 +83,7 @@ class BigInt {
     return;
   }
 
+  //repeat process from ints for longs
   void operator=(long n) {
     int i;
 
@@ -96,12 +101,17 @@ class BigInt {
     return;
   }
 
+  //repeat process from ints for strings
   void operator=(string n) {
     int i;
 
     digits = 0;
+    //intsead of being 0 like the ints, the string will be empty when all the
+    //digits have been read in
     while(n != "") {
+      //get the lsb from the end of the string, and convert it to an integer 0-9
       array[digits] = (int)n[n.size()-1] - 48;
+      //erase the lsb from the string
       n.erase(n.size()-1);
       digits++;
     }
@@ -117,11 +127,14 @@ class BigInt {
     int i;
 
     digits = 0;
+    //for each digit in the bigint, copy it
     while(digits < n.digits) {
+      //copy the digit over
       array[digits] = n.array[digits];
       digits++;
     }
 
+    //fill in the rest of the array with 0's
     for(i=digits; i<100000; i++) {
       array[i] = 0;
     }
@@ -138,13 +151,17 @@ class BigInt {
   void operator+=(int n) {
     BigInt s;
 
+    //convert n to a BigInt using the assignment operator
     s = n;
+    //add the two numbers
     s = (*this) + s;
+    //assign the solution to "this" number
     (*this) = s;
 
     return;
   }
 
+  //repeat like int but for long
   void operator+=(long n) {
     BigInt s;
 
@@ -155,6 +172,7 @@ class BigInt {
     return;
   }
 
+  //repeat like int but for string
   void operator+=(string n) {
     BigInt s;
 
@@ -165,6 +183,7 @@ class BigInt {
     return;
   }
 
+  //repeat like int but for BigInt
   void operator+=(const BigInt& n) {
     BigInt s;
 
@@ -181,6 +200,7 @@ class BigInt {
   /***************************************************************************
    * begin -=
    **************************************************************************/
+  //repeat like += but with subtraction
   void operator-=(int n) {
     BigInt s;
 
@@ -191,6 +211,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with subtraction
   void operator-=(long n) {
     BigInt s;
 
@@ -201,6 +222,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with subtraction
   void operator-=(string n) {
     BigInt s;
 
@@ -211,6 +233,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with subtraction
   void operator-=(const BigInt& n) {
     BigInt s;
 
@@ -227,6 +250,7 @@ class BigInt {
   /***************************************************************************
    * begin *=
    **************************************************************************/
+  //repeat like += but with multiplication
   void operator*=(int n) {
     BigInt s;
 
@@ -237,6 +261,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with multiplication
   void operator*=(long n) {
     BigInt s;
 
@@ -247,6 +272,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with multiplication
   void operator*=(string n) {
     BigInt s;
 
@@ -257,6 +283,7 @@ class BigInt {
     return;
   }
 
+  //repeat like += but with multiplication
   void operator*=(const BigInt& n) {
     BigInt s;
 
@@ -834,6 +861,15 @@ class BigInt {
       digits = digits - 1;
       offset /= 10;
     }
+  }
+
+  int pop(void) {
+    return array[digits-1];
+  }
+
+  void push(int n) {
+    array[digits] = n;
+    digits++;
   }
   /***************************************************************************
    * END ACCESORS
