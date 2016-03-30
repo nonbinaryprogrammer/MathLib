@@ -256,13 +256,6 @@ int main() {
   }
   printf("\n");
 
-  printf("testing sumdigits()\n");
-  c = 123456789;
-  b = c.sumdigits();
-  printf("expected: %d, actual: ", 45);
-  b.print();
-  printf("\n");
-
   printf("testing <:\n");
   c = 4;
   b = 3;
@@ -348,7 +341,167 @@ int main() {
   } else {
     printf("expected: 0, actual: 0\n");
   }
+  printf("\n");
 
+  printf("Testing >=:\n");
+  b = 4;
+  if(b >= 5) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b >= (long)5) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b >= "5") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  c = 5;
+  if(b >= c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b >= 4) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= (long)4) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= "4") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= b) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  c = 3;
+  if(b >= 3) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= (long)3) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= "3") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b >= c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+  printf("\n");
+
+  printf("Testing <=:\n");
+  if(b <= 3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b <= (long)3) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b <= "3") {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  c = 3;
+  if(b <= c) {
+    printf("expected: 0, actual: 1\n");
+  } else {
+    printf("expected: 0, actual: 0\n");
+  }
+
+  if(b <= 4) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b <= (long)4) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b <= "4") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  c = 4;
+  if(b <= c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b <= 5) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b <= (long)5) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  if(b <= "5") {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+
+  c = 5;
+  if(b <= c) {
+    printf("expected: 1, actual: 1\n");
+  } else {
+    printf("expected: 1, actual: 0\n");
+  }
+  printf("\n");
+
+  printf("testing sumdigits()\n");
+  c = 123456789;
+  b = c.sumdigits();
+  printf("expected: %d, actual: ", 45);
+  b.print();
   printf("\n");
 
   printf("testing proddigits()\n");
