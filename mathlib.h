@@ -310,9 +310,10 @@ class BigInt {
    **************************************************************************/
   BigInt operator+(int n) {
     BigInt sol;
-    int i;
 
+    //convert to BigInt by assignment
     sol = n;
+    //use BigInt implementation of addition
     sol = (*this) + sol;
 
     return sol;
@@ -320,9 +321,10 @@ class BigInt {
 
   BigInt operator+(long n) {
     BigInt sol;
-    int i;
 
+    //convert to BigInt by assignment
     sol = n;
+    //use BigInt implementation of addition
     sol = (*this) + sol;
 
     return sol;
@@ -330,9 +332,10 @@ class BigInt {
 
   BigInt operator+(string n) {
     BigInt sol;
-    int i;
 
+    //convert to BigInt by assignment
     sol = n;
+    //use BigInt implementation of addition
     sol = (*this) + sol;
 
     return sol;
@@ -342,43 +345,54 @@ class BigInt {
     BigInt sol;
     int d, t, carry;
 
+    //store the larger number of digits in the iterator, t
     if(digits > n.digits) {
       t = digits;
     } else {
       t = n.digits;
     }
 
+    //carry bit will tell whether the two digits added together >9
     carry = 0;
+    //BigInt to store the solution
     sol = 0;
 
+    //repeat for each digit in the longer number
     for(d=0; d<t; d++) {
+      //add one to the solution's digit count
       sol.digits++;
 
-      //printf("%d + %d + carry(%d) = ", array[d], n.array[d], carry);
+      //add the two digits and the carry bit
       sol.array[d] += array[d] + n.array[d] + carry;
-      //printf("%d\n", sol.array[d]);
-      //sol.print();
 
+      //check if the carry bit needs to be set or reset
       if(sol.array[d] > 9) {
+        //set the carry bit if the current digit is >9
         carry = 1;
+        //store the digit%10 to get the last digit
+        //if sol.array[d] == 12, sol.array[d] %= 10 == 2
         sol.array[d] %= 10;
       } else {
+        //reset the carry bit if the digit is less than 10
         carry = 0;
       }
-      //sol.print();
-      //printf("sol.digits=%d\n", sol.digits);
     }
 
+    //once all of the digits have been iterated through, there may still be a
+    //carry
     if(carry == 1) {
+      //if there is a carry, put a 1 in the msb of the number
       sol.array[sol.digits] = 1;
+      //add 1 to the digits
       sol.digits++;
     }
 
+    //double checks that the digit count is correct by checking that the msb is
+    //not 0 and decrementing the digit count until it is found that the number
+    //is 0 or until the real msb is retrieved
     while(sol.array[sol.digits-1] == 0 && sol.digits != 0) {
       sol.digits = sol.digits - 1;
     }
-
-    //sol.print();
 
     return sol;
   }
@@ -392,7 +406,9 @@ class BigInt {
   BigInt operator-(int n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform subtraction using BigInt implementation
     sol = (*this) - sol;
 
     return sol;
@@ -401,7 +417,9 @@ class BigInt {
   BigInt operator-(long n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform subtraction using BigInt implementation
     sol = (*this) - sol;
 
     return sol;
@@ -410,7 +428,9 @@ class BigInt {
   BigInt operator-(string n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform subtraction using BigInt implementation
     sol = (*this) - sol;
 
     return sol;
@@ -420,19 +440,31 @@ class BigInt {
     BigInt sol;
     int i, borrow;
 
+    //init solution to the left hand operand
     sol = (*this);
+    //init the borrow bit to 0
     borrow = 0;
+    //repeat for each digit in left operand
     for(i=0; i<digits; i++) {
+      //subtract the borrow from the digit
       sol.array[i] -= borrow;
+      //reset borrow bit
       borrow = 0;
+      //subtract the digit of right operand from digit of left operand if there
+      //is a right operand digit (there wouldn't be in this operation: 102 -
+      //002 for the 2nd or 3rd iteration
       if(i < n.digits) {
         sol.array[i] -= n.array[i];
       }
+      //borrow if the digit is less than 0
       if(sol.array[i] < 0) {
+        //add 10
         sol.array[i] += 10;
+        //set the borrow bit
         borrow = 1;
       }
     }
+    //get rid of 0 msb's
     while(sol.array[sol.digits-1] == 0) {
       sol.digits--;
     }
@@ -449,7 +481,9 @@ class BigInt {
   BigInt operator*(int n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform multiplication using BigInt implementation
     sol = (*this) * n;
 
     return sol;
@@ -458,7 +492,9 @@ class BigInt {
   BigInt operator*(long n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform multiplication using BigInt implementation
     sol = (*this) * n;
 
     return sol;
@@ -467,7 +503,9 @@ class BigInt {
   BigInt operator*(string n) {
     BigInt sol;
 
+    //convert to BigInt by assignment
     sol = n;
+    //perform multiplication using BigInt implementation
     sol = (*this) * n;
 
     return sol;
@@ -477,21 +515,42 @@ class BigInt {
     BigInt sol;
     int i, j, temp, offset;
 
+    //init solution to 0
     sol = 0;
+    //special case if multiplier is 0 or 1
     if(multiplier == 0) {
       return sol;
+    } else if(multiplier == 1) {
+      return (*this);
     }
+    //special case is multiplied number is 1 or 0
+    if((*this) == 0) {
+      return sol;
+    } else if((*this) == 1) {
+      return multiplier;
+    }
+
+    //repeat for each digit of the multiplier
     for(i=0; i<multiplier.digits; i++) {
+      //calculate how many 0's to add after the number based on what digit we
+      //are at
       offset = pow(10, i);
+      //repeat for each of the digits in the multiplied number
       for(j=0; j<digits; j++) {
+        //for all but the first digit, add a 0 to the offset
         if(j != 0) {
           offset *= 10;
         }
+        //multiply the two digits
         temp = array[j] * multiplier.array[i];
+        //offset the number
         temp *= offset;
+        //add it to the total
         sol = sol + temp;
       }
     }
+
+    //get rid of leading 0's in digit count
     while(sol.array[sol.digits-1] == 0 && sol.digits != 0) { sol.digits = sol.digits - 1; }
 
     return sol;
@@ -502,6 +561,7 @@ class BigInt {
 
   /***************************************************************************
    * begin /
+   * TODO: Fix division algorithm. Sometimes segfaults
    **************************************************************************/
   BigInt operator/(const int n) {
     BigInt sol, i;
@@ -566,28 +626,37 @@ class BigInt {
   /***************************************************************************
    * begin arithmetic on digits
    **************************************************************************/
+  //TODO: implement isprime. dependent on addition
   bool isprime(void) {
     return 1;
   }
 
+  //sums the digits
   BigInt sumdigits(void) {
     BigInt sum;
     int i;
 
+    //init sum to 0
     sum = 0;
+    //repeat for each digit
     for(i=0; i<digits; i++) {
+      //add the digit to the sum
       sum += array[i];
     }
 
     return sum;
   }
 
+  //product of the digits
   BigInt proddigits(void) {
     BigInt product;
     int i;
 
+    //init product to 1
     product = 1;
+    //repeat for each digit
     for(i=0; i<digits; i++) {
+      //multiply the digit by the product
       product *= array[i];
     }
 
@@ -612,8 +681,10 @@ class BigInt {
     BigInt i;
     int j;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use BigInt implementation
     return ((*this) == i);
   }
 
@@ -621,8 +692,10 @@ class BigInt {
     BigInt i;
     int j;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use BigInt implementation
     return ((*this) == i);
   }
 
@@ -630,24 +703,32 @@ class BigInt {
     BigInt i;
     int j;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use BigInt implementation
     return ((*this) == i);
   }
 
   inline bool operator==(const BigInt &i) const {
     int j;
 
+    //special case
+    //if the number of digits in the number are not equal, they are not the same
+    //numbers
     if(digits != i.digits) {
       return 0;
     }
 
+    //repeat for each digit
     for(j=0; j<digits; j++) {
+      //if two digits are not the same, return false
       if(array[j] != i.array[j]) {
         return 0;
       }
     }
 
+    //everything matches and returns true
     return 1;
   }
 
@@ -661,28 +742,35 @@ class BigInt {
   inline bool operator!=(const int n) const {
     BigInt i;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //return the opposite of the BigInt check for equality
     return !((*this) == i);
   }
 
   inline bool operator!=(const long n) const {
     BigInt i;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //return the opposite of the BigInt check for equality
     return !((*this) == i);
   }
 
   inline bool operator!=(const string n) const {
     BigInt i;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //return the opposite of the BigInt check for equality
     return !((*this) == i);
   }
 
   inline bool operator!=(const BigInt &n) const {
+    //return the opposite of the BigInt check for equality
     return !((*this) == n);
   }
 
@@ -697,19 +785,26 @@ class BigInt {
     int i;
     BigInt n;
 
+    //convert to BigInt by assignment
     n = m;
 
+    //get index of left operand msb
     i = digits - 1;
 
+    //special case if the digits are not equal, the one with more digits is
+    //bigger
     if(digits > n.digits) {
       return 1;
     } else if(digits < n.digits) {
       return 0;
     } else {
+      //if digits are equal, loop over each digit starting with msb until they
+      //are not equal
       while(array[i] == n.array[i] && i > 0) {
         i--;
       }
 
+      //return based on digit's inequality
       if(array[i] > n.array[i]) {
         return 1;
       } else {
@@ -722,19 +817,26 @@ class BigInt {
     int i;
     BigInt n;
 
+    //convert to BigInt by assignment
     n = m;
 
+    //get index of left operand msb
     i = digits - 1;
 
+    //special case if the digits are not equal, the one with more digits is
+    //bigger
     if(digits > n.digits) {
       return 1;
     } else if(digits < n.digits) {
       return 0;
     } else {
+      //if digits are equal, loop over each digit starting with msb until they
+      //are not equal
       while(array[i] == n.array[i] && i > 0) {
         i--;
       }
 
+      //return based on digit's inequality
       if(array[i] > n.array[i]) {
         return 1;
       } else {
@@ -747,19 +849,26 @@ class BigInt {
     int i;
     BigInt n;
 
+    //convert to BigInt by assignment
     n = m;
 
+    //get index of left operand msb
     i = digits - 1;
 
+    //special case if the digits are not equal, the one with more digits is
+    //bigger
     if(digits > n.digits) {
       return 1;
     } else if(digits < n.digits) {
       return 0;
     } else {
+      //if digits are equal, loop over each digit starting with msb until they
+      //are not equal
       while(array[i] == n.array[i] && i > 0) {
         i--;
       }
 
+      //return based on digit's inequality
       if(array[i] > n.array[i]) {
         return 1;
       } else {
@@ -771,17 +880,23 @@ class BigInt {
   inline bool operator> (const BigInt &n) const {
     int i;
 
+    //get index of left operand msb
     i = digits - 1;
 
+    //special case if the digits are not equal, the one with more digits is
+    //bigger
     if(digits > n.digits) {
       return 1;
     } else if(digits < n.digits) {
       return 0;
     } else {
+      //if digits are equal, loop over each digit starting with msb until they
+      //are not equal
       while(array[i] == n.array[i] && i > 0) {
         i--;
       }
 
+      //return based on digit's inequality
       if(array[i] > n.array[i]) {
         return 1;
       } else {
@@ -801,8 +916,10 @@ class BigInt {
     BigInt i;
     bool sol;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use implementation of > and reverse left and right operands
     sol = i > (*this);
 
     return sol;
@@ -812,8 +929,10 @@ class BigInt {
     BigInt i;
     bool sol;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use implementation of > and reverse left and right operands
     sol = i > (*this);
 
     return sol;
@@ -823,8 +942,10 @@ class BigInt {
     BigInt i;
     bool sol;
 
+    //convert to BigInt by assignment
     i = n;
 
+    //use implementation of > and reverse left and right operands
     sol = i > (*this);
 
     return sol;
@@ -833,6 +954,7 @@ class BigInt {
   inline bool operator< (const BigInt &n) const {
     bool sol;
 
+    //use implementation of > and reverse left and right operands
     sol = n > (*this);
 
     return sol;
@@ -843,30 +965,107 @@ class BigInt {
    **************************************************************************/
 
   /***************************************************************************
+   * begin >=
+   **************************************************************************/
+  inline bool operator >=(const int n) const {
+    //use implementations of > and ==
+    return ((*this)>n)||((*this)==n);
+  }
+
+  inline bool operator >=(const long n) const {
+    //use implementations of > and ==
+    return ((*this)>n)||((*this)==n);
+  }
+
+  inline bool operator >=(const string n) const {
+    //use implementations of > and ==
+    return ((*this)>n)||((*this)==n);
+  }
+
+  inline bool operator >=(const BigInt &n) const {
+    //use implementations of > and ==
+    return ((*this)>n)||((*this)==n);
+  }
+  /***************************************************************************
+   * end >=
+   **************************************************************************/
+
+  /***************************************************************************
+   * begin <=
+   **************************************************************************/
+  inline bool operator <=(const int n) const {
+    //use implementations of < and ==
+    return ((*this)<n)||((*this)==n);
+  }
+
+  inline bool operator <=(const long n) const {
+    //use implementations of < and ==
+    return ((*this)<n)||((*this)==n);
+  }
+
+  inline bool operator <=(const string n) const {
+    //use implementations of < and ==
+    return ((*this)<n)||((*this)==n);
+  }
+
+  inline bool operator <=(const BigInt &n) const {
+    //use implementations of < and ==
+    return ((*this)<n)||((*this)==n);
+  }
+  /***************************************************************************
+   * end <=
+   **************************************************************************/
+
+  /***************************************************************************
    * END LOGICAL OPERATOR OVERLOADS
    **************************************************************************/
 
   /***************************************************************************
    * BEGIN ACCESSORS 
    **************************************************************************/
+  //returns the BigInt as a regular int
+  //may overflow
   int asint(void) {
     int s, offset;
 
+    //init solution to 0
     s = 0;
+    //decrement digits to point to msb
     digits = digits - 1;
+    //init offset for msb
     offset = pow(10, digits);
 
+    //repeat for each digit
     while(digits >= 0) {
+      //add the digit time the offset to solution
       s += (array[digits] * offset);
+      //decrement digits and offset
       digits = digits - 1;
       offset /= 10;
     }
   }
 
+  //pops msb
   int pop(void) {
+    int sol;
+
+    //decrement digit count
+    digits--;
+    //store msb
+    sol = array[digits];
+    //remove msb from array
+    array[digits] = 0;
+
+    //return stored msb
+    return sol;
+  }
+
+  //return msb
+  int peek(void) {
     return array[digits-1];
   }
 
+  //pushes new digit at msb
   void push(int n) {
     array[digits] = n;
     digits++;
