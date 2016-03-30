@@ -509,6 +509,23 @@ int main() {
   b = c.proddigits();
   printf("expected: %d, actual: ", 362880);
   b.print();
+  printf("\n");
+
+  printf("testing push:\n");
+  c = 3;
+  c.push(4);
+  c.print();
+  printf("\n");
+
+  printf("testing peek:\n");
+  printf("expected: 4, actual: %d\n", c.peek());
+  printf("\n");
+
+  printf("testing pop:\n");
+  printf("expected: 4, actual: %d\n", c.pop());
+  printf("expected: 3, actual: ");
+  c.print();
+  printf("\n");
 
   return 0;
 }
