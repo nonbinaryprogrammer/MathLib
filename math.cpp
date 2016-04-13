@@ -5,22 +5,22 @@
 template<typename T>
 void Assert_BigInt_Equals(const BigInt& tested, T expected, const char* msg=NULL)
 {
-	assert(tested==expected);
 	if(msg)
 	{
 		printf(msg,expected);
 		tested.print();
 	}
+	assert(tested==expected);
 }
 
 template<typename T>
 void Assert(T tested, T expected, const char* msg=NULL)
 {
-	assert(tested==expected);
 	if(msg)
 	{
 		printf(msg,expected,tested);
 	}
+	assert(tested==expected);
 }
 
 char buffer[128]={0};
