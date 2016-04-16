@@ -679,7 +679,6 @@ class BigInt {
    **************************************************************************/
   inline bool operator==(const int n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
@@ -690,7 +689,6 @@ class BigInt {
 
   inline bool operator==(const long n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
@@ -701,7 +699,6 @@ class BigInt {
 
   inline bool operator==(const string n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
