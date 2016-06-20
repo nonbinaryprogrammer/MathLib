@@ -35,7 +35,7 @@ class BigInt {
   /***************************************************************************
    * print number in big endian
    **************************************************************************/
-  void print(void) {
+  void print(void) const {
     int i;
 
     //prints each digit in the array starting with the most significant bit,
