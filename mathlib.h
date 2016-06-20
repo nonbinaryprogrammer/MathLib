@@ -679,7 +679,6 @@ class BigInt {
    **************************************************************************/
   inline bool operator==(const int n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
@@ -690,7 +689,6 @@ class BigInt {
 
   inline bool operator==(const long n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
@@ -701,7 +699,6 @@ class BigInt {
 
   inline bool operator==(const string n) const {
     BigInt i;
-    int j;
 
     //convert to BigInt by assignment
     i = n;
@@ -1021,7 +1018,7 @@ class BigInt {
    **************************************************************************/
 
   /***************************************************************************
-   * BEGIN ACCESSORS 
+   * BEGIN ACCESSORS
    **************************************************************************/
   //returns the BigInt as a regular int
   //may overflow
@@ -1043,6 +1040,7 @@ class BigInt {
       digits = digits - 1;
       offset /= 10;
     }
+    return s;
   }
 
   //pops msb
